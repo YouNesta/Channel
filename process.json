@@ -1,0 +1,17 @@
+{
+    "apps": [
+        {
+            "name": "client",
+            "cwd": "/var/www/Channel/client",
+            "args": "-p 8080 -d false",
+            "script": "/root/.nvm/versions/node/v6.9.1/bin/http-server"
+        },
+        {
+            "name": "api",
+            "cwd": "/var/www/Channel/api",
+	    "script": "bin/www",
+            "watch": true,
+	    "node_args": ['--debug=7000']
+        }
+    ]
+}
