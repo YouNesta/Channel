@@ -2,7 +2,7 @@
 
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-
+import {HeaderComponent} from './Header/header.component'
 describe('App: Client', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -21,13 +21,13 @@ describe('App: Client', () => {
   it(`should have as title 'app works!'`, async(() => {
     let fixture = TestBed.createComponent(AppComponent);
     let app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app works!');
+    expect(app.title).toEqual('Nesta Channel');
   }));
 
   it('should render title in a h1 tag', async(() => {
     let fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     let compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
+    expect(compiled.querySelector('h1').textContent).toContain('Nesta Channel');
   }));
 });
