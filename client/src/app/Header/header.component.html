@@ -1,0 +1,6 @@
+<nav>
+  <a routerLink="/" routerLinkActive="active">Home</a>
+  <a routerLink="/users"r outerLinkActive="active">User</a>
+  <a *ngIf="!isLoggedIn()" routerLink="/login" routerLinkActive="active">Connexion</a>
+  <button *ngIf="isLoggedIn()" (click)="logout()">Déconnexion</button>
+</nav>

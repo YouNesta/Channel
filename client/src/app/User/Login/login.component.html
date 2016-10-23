@@ -1,0 +1,12 @@
+<h2>Login</h2>
+<form>
+  <div class="form-group">
+    <label for="pseudo">Pseudo</label>
+    <input type="text" [(ngModel)]="model.pseudo" class="form-control" name="pseudo" id="pseudo" required>
+  </div>
+  <div class="form-group">
+    <label for="password">Alter Ego</label>
+    <input type="password" [(ngModel)]="model.password" name="password" class="form-control" id="password">
+  </div>
+  <button type="button" class="btn btn-default" (click)="login()">Login</button>
+</form>
