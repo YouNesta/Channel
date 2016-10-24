@@ -4,25 +4,48 @@ import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch'
 import { tokenNotExpired } from 'angular2-jwt';
+import {config} from "../../environments/environment";
+import {User} from "../User/user";
 
 @Injectable()
 export class AuthService {
-
+  private url = config.apiURL;
 
   constructor(private http: Http) {
   }
 
   login(email: String, password: String) {
 
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions();
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let body = JSON.stringify({ email, password });
+
+
+      return this.http
+      .post(
+        this.url+'/user/login',
+        body,
+        {headers: headers}
+      )
+      .map((res:Response) => res.json())
+
+
+  }
+
+  subscribe(user:User, password: String) {
+
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+
+    let body = JSON.stringify({ user, password });
 
 
     return this.http
       .post(
-        'http://localhost:3000/user/login',
-        JSON.stringify({ email, password }),
-        options
+        this.url+'/user/subscribe',
+        body,
+        {headers: headers}
       )
       .map((res:Response) => res.json())
 
@@ -31,11 +54,14 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('auth_token');
+    localStorage.removeItem('user');
   }
 
   isLoggedIn() {
     return tokenNotExpired('auth_token');
   }
+
+
 
   private handleError (error: any) {
     // In a real world app, we might use a remote logging infrastructure

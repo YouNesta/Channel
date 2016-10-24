@@ -1,0 +1,58 @@
+<md-card class="demo-card demo-basic">
+  <md-toolbar color="primary">SubscriptionAuth</md-toolbar>
+  <md-card-content>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+
+      <md-input #pseudoInput type="text" [(ngModel)]="model.pseudo"  minlength="5" maxlength="20" placeholder="Pseudo" name="pseudo" id="pseudo" required>
+        <md-hint align="end">{{pseudoInput.characterCount}} / 20</md-hint>
+      </md-input>
+
+      <md-input #emailInput type="text" [(ngModel)]="model.email"  minlength="5" maxlength="40" placeholder="Email" name="email" id="email" required>
+        <md-hint align="end">{{emailInput.characterCount}} / 40</md-hint>
+      </md-input>
+
+      <table>
+        <tr>
+          <td>
+            <md-input placeholder="First Name" [(ngModel)]="model.firstName" minlength="5" maxlength="20" name="firstName" #firstNameInput>
+              <md-hint align="end">{{firstNameInput.characterCount}} / 20</md-hint>
+            </md-input>
+          </td>
+          <td>
+            <md-input placeholder="Last Name" minlength="5" [(ngModel)]="model.lastName" maxlength="50"  name="lastName" #lastNameInput>
+              <md-hint align="end">{{lastNameInput.characterCount}} / 50</md-hint>
+            </md-input>
+          </td>
+        </tr>
+      </table>
+
+      <md-input #phoneInput type="text" [(ngModel)]="model.phone"  minlength="5" maxlength="40" name="phone" id="phone" required>
+        <md-placeholder>
+          <i class="material-icons app-input-icon">android</i> Phone
+        </md-placeholder>
+        <md-hint align="end">{{phoneInput.characterCount}} / 10</md-hint>
+      </md-input>
+
+      <table>
+        <tr>
+          <td>
+            <md-input type="text" [(ngModel)]="model.password" minlength="5"  name="password" placeholder="Password" id="password"  #passwordInput>
+              <md-hint align="end">{{passwordInput.characterCount}}</md-hint>
+            </md-input>
+          </td>
+          <td>
+            <md-input type="text" [(ngModel)]="model.confirmedPassword" name="confirmedPassword" placeholder="Confirme Password" id="confirmedPassword">
+            </md-input>
+          </td>
+        </tr>
+      </table>
+
+
+
+
+      <button class="md-primary" type="submit" [disabled]="!loginForm.form.valid" md-fab>
+        <md-icon class="md-24">send</md-icon>
+      </button>
+    </form>
+  </md-card-content>
+</md-card>

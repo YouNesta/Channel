@@ -4,12 +4,14 @@ import { UserComponent } from './user.component';
 import {UserRoutingModule} from "./user-routing.module";
 import {UserService} from "./user.service";
 import {FormsModule} from "@angular/forms";
+import {MaterialModule} from "@angular/material";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    UserRoutingModule
+    UserRoutingModule,
+    MaterialModule.forRoot(),
   ],
   declarations: [UserComponent],
   providers: [UserService]

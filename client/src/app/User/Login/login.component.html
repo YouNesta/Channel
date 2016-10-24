@@ -1,12 +1,20 @@
-<h2>Login</h2>
-<form>
-  <div class="form-group">
-    <label for="pseudo">Pseudo</label>
-    <input type="text" [(ngModel)]="model.pseudo" class="form-control" name="pseudo" id="pseudo" required>
-  </div>
-  <div class="form-group">
-    <label for="password">Alter Ego</label>
-    <input type="password" [(ngModel)]="model.password" name="password" class="form-control" id="password">
-  </div>
-  <button type="button" class="btn btn-default" (click)="login()">Login</button>
-</form>
+<md-card class="demo-card demo-basic">
+  <md-toolbar color="primary">Login</md-toolbar>
+  <md-card-content>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+
+      <table>
+        <tr>
+          <td> <md-input #emailInput type="text" [(ngModel)]="model.email"  name="email" id="email" required>
+            <md-placeholder>
+              <i class="material-icons app-input-icon">person</i>  Email</md-placeholder>
+          </md-input></td>
+          <td><md-input type="text" [(ngModel)]="model.password" name="password" placeholder="Password" id="password"></md-input></td>
+        </tr>
+      </table>
+      <button class="md-primary" type="submit" [disabled]="!loginForm.form.valid" md-fab>
+        <md-icon class="md-24">send</md-icon>
+      </button>
+    </form>
+    </md-card-content>
+</md-card>

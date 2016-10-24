@@ -6,3 +6,6 @@
 export const environment = {
   production: false
 };
+export const config = {
+  apiURL: "http://channel.nestaa.dev:3000"
+};

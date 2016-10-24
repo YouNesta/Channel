@@ -1,0 +1,7 @@
+module.exports = {
+    'secret': '',
+    'database': '',
+    'client_id': "",
+    'client_secret': "",
+    'redirect_uri': ""
+};

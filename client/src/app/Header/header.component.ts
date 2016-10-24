@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {AuthService} from "../Auth/auth.service";
 import {Router} from "@angular/router";
+import {MdSidenav} from "@angular/material";
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,8 @@ import {Router} from "@angular/router";
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  @Input() title: string;
+  @Input() sidenav: MdSidenav;
 
   constructor(private auth: AuthService, private router: Router) {
   }
@@ -16,11 +19,11 @@ export class HeaderComponent implements OnInit {
   }
 
   isLoggedIn(){
-    console.log(this.auth.isLoggedIn())
     return this.auth.isLoggedIn() == true;
   }
   logout(){
-    this.router.navigate([''])
+    this.auth.logout();
+    this.router.navigate(['']);
   }
 
 }

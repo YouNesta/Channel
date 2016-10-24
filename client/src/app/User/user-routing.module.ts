@@ -6,7 +6,7 @@ import {AuthGuard} from "../Auth/auth.guard.service";
 @NgModule({
   imports: [
     RouterModule.forChild([
-      { path: 'users',
+      { path: 'user',
         component: UserComponent,
         canActivate: [AuthGuard]
 

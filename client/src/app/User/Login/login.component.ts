@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "../../Auth/auth.service";
+import {MdInput} from "@angular/material";
 
 @Component({
   selector: 'app-login',
@@ -8,10 +9,13 @@ import {AuthService} from "../../Auth/auth.service";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-   public model = {
-    pseudo: "",
+  @ViewChild('emailInput') emailInput: MdInput;
+
+  public model = {
+    email: "",
     password: ""
   };
+  submitted = false;
 
   constructor(private auth: AuthService, private router: Router) {
 
@@ -19,15 +23,24 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     if(this.auth.isLoggedIn()) this.router.navigate(['']) ;
+    this.emailInput.focus();
+
+  }
+  onSubmit(){
+    this.submitted = true;
+    this.login();
   }
 
   login(){
-    this.auth.login("younes@gmail.com", "lalala")
+
+    this.auth.login(this.model.email, this.model.password)
       .subscribe(
         res => {
             if (res.success) {
               localStorage.setItem('auth_token', res.auth_token);
-              this.router.navigate(['users'])
+              var user = JSON.stringify(res.user)
+              localStorage.setItem('user', user);
+              this.router.navigate(['user'])
             }
          },
         err => console.error(err),

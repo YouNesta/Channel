@@ -1,6 +1,10 @@
-<app-header></app-header>
+<md-sidenav-layout>
+  <md-sidenav #sidenav mode="side" class="app-sidenav">
+    <app-sidenav></app-sidenav>
+  </md-sidenav>
 
-<h1>
-  {{title}}
-</h1>
-<router-outlet></router-outlet>
+  <app-header [title]="title" [sidenav]="sidenav"></app-header>
+  <div class="app-content">
+    <router-outlet></router-outlet>
+  </div>
+</md-sidenav-layout>

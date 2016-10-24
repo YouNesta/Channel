@@ -25,5 +25,3 @@ coverage
 # Benchmarking
 benchmarks/graphs
 
-# Config file
-config/config.js
