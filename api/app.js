@@ -7,6 +7,7 @@ var mongoose = require('mongoose')
 
 var routes = require('./routes/index');
 var user = require('./routes/user');
+var channel = require('./routes/channel');
 var config = require('./config/config');
 
 var app = express();
@@ -29,6 +30,7 @@ app.use(function(req, res, next) {
 
 app.use('/', routes);
 app.use('/user', user);
+app.use('/channel', channel);
 
 // Create the database connection
 mongoose.connect(config.database);

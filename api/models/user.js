@@ -35,37 +35,15 @@ var UserSchema = new Schema({
         type: String,
         required: true
     },
-    token: {
-        service: String,
-        token: String,
-        refreshToken: String,
-        token_type : String,
-        expires_in : Number
-    },
-    channels: {
-        mongooseId: Schema.Types.ObjectId,
-        id: String,
-        website: String,
-        title: String,
-        category: String,
-        thumbnails: {
-            "default": String,
-            medium: String,
-            high: String
-        },
-        viewed: {
-            episode: String
-        }
-    },
-    youtubeProfile: {
-        title: String,
-        description: String,
-        createdAt: Date,
-        thumbnails:{
-            "default": String,
-            medium: String,
-            high: String
-        }
+    services: [{
+        serviceName: String,
+        profile: {},
+        token: {}
+    }],
+    channels:{
+      id: String,
+      categories: {},
+      service: String
     },
     createdAt: {
         type: Date,

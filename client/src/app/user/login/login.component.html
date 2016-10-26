@@ -12,9 +12,13 @@
           <td><md-input type="text" [(ngModel)]="model.password" name="password" placeholder="Password" id="password"></md-input></td>
         </tr>
       </table>
-      <button class="md-primary" type="submit" [disabled]="!loginForm.form.valid" md-fab>
-        <md-icon class="md-24">send</md-icon>
-      </button>
+      <md-card-actions layout="row" layout-align="end center">
+        <span class="app-toolbar-filler"></span>
+
+        <button class="md-primary" type="submit" [disabled]="!loginForm.form.valid" md-fab>
+          <md-icon class="md-24">send</md-icon>
+        </button>
+      </md-card-actions>
     </form>
     </md-card-content>
 </md-card>

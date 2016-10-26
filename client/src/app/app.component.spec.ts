@@ -2,7 +2,7 @@
 
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import {HeaderComponent} from './Header/header.component'
+import {HeaderComponent} from './layout/header/header.component'
 describe('App: Client', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({

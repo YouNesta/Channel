@@ -5,7 +5,7 @@ var User = require('../models/user');
 var config = require('../config/config');
 var request = require('request');
 var jwtAuth = require('express-jwt');
-
+var channelModule = require('../modules/channel');
 
 
 router.post('/subscribe', function(req, res, next) {
@@ -45,7 +45,7 @@ router.post('/subscribe', function(req, res, next) {
                     msg: 'Authentication failed. User not found.'
                 });
             } else {
-                var token = jwt.sign(user._id, config.secret, { expiresIn:  60*60*24 });
+                var token = jwt.sign({id : user._id.toString()}, config.secret, { expiresIn:  60*60*24 });
                 delete user.password;
                 res.send({
                     success: true,
@@ -86,7 +86,7 @@ router.post('/login', function(req, res, next) {
                 user.comparePassword(req.body.password, function (err, isMatch) {
                     if (isMatch && !err) {
 
-                        var token = jwt.sign({foo: "bar"}, config.secret, { expiresIn:  60*60*24 });
+                        var token = jwt.sign({id : user._id.toString()}, config.secret, { expiresIn:  60*60*24 });
 
                         res.json({
                             success: true,
@@ -146,29 +146,34 @@ router.post('/oauth', jwtAuth({ secret: config.secret}), function(req, res) {
                 };
                 request.get(options, function(error, response, youtubeBody) {
                     getSubscription(body.access_token, function(subscription){
-                        User.findByIdAndUpdate(
-                            req.body._id,
-                            {$set: {
-                                token: {
-                                    service: 'youtube',
-                                    token: body.access_token,
-                                    refreshToken: body.refresh_token,
-                                    token_type : body.token_type,
-                                    expires_in : body.expires_in
-                                },
-                                channels: subscription
-                            }},
-                            {safe: true, upsert: true, new: true},
-                            function(err, user) {
-                                if(err) throw err;
 
-                                res.json({
-                                    success: true,
-                                    msg: "Successful authenfication",
-                                    user: user
-                                });
-                            }
-                        );
+
+                        channelModule.saveYoutubeChannels(subscription, function(data){
+                            User.findByIdAndUpdate(
+                                req.body._id,
+                                {$set: {
+                                    token: {
+                                        service: 'youtube',
+                                        token: body.access_token,
+                                        refreshToken: body.refresh_token,
+                                        token_type : body.token_type,
+                                        expires_in : body.expires_in
+                                    },
+                                    channels: data
+                                }},
+                                {safe: true, upsert: true, new: true},
+                                function(err, user) {
+                                    if(err) throw err;
+
+                                    res.json({
+                                        success: true,
+                                        msg: "Successful authenfication",
+                                        user: user
+                                    });
+
+                                }
+                            );
+                        });
                     });
                 })
             }
@@ -189,19 +194,19 @@ function getSubscription(access_token, callback){
     request.get(options, function(error, response, subscriptionBody) {
         var subscriptionBody = JSON.parse(subscriptionBody);
         var items = [];
-        console.log(subscriptionBody.items[0].snippet)
+
         for(var key in subscriptionBody.items){
+            console.log(subscriptionBody.items[key].snippet.resourceId.channelId);
             items.push({
-                id: subscriptionBody.items[key].snippet.resourceId.channelId,
+                channelId: subscriptionBody.items[key].snippet.resourceId.channelId,
                 title: subscriptionBody.items[key].snippet.title,
-                website: "youtube",
-                category: "",
+                description: subscriptionBody.items[key].snippet.description,
+                categories: [],
                 thumbnails: {
-                    "default": subscriptionBody.items[key].snippet.thumbnails.default,
-                    medium: subscriptionBody.items[key].snippet.thumbnails.medium,
-                    high: subscriptionBody.items[key].snippet.thumbnails.high
-                },
-                viewed: {}
+                    "default": subscriptionBody.items[key].snippet.thumbnails.default.url,
+                    medium: subscriptionBody.items[key].snippet.thumbnails.medium.url,
+                    high: subscriptionBody.items[key].snippet.thumbnails.high.url
+                }
             })
         }
 
@@ -213,24 +218,24 @@ function getSubscription(access_token, callback){
     function getNext(items, nextPageToken){
         console.log(nextPageToken);
         var options = {
-            url: 'https://www.googleapis.com/youtube/v3/subscriptions?part=snippet&mine=true&maxResult=50&pageToken='+nextPageToken,
+            url: 'https://www.googleapis.com/youtube/v3/subscriptions?part=snippet&mine=true&maxResults=50&pageToken='+nextPageToken,
             headers: header
         };
 
         request.get(options, function(error, response, subscriptionBody) {
             var subscriptionBody = JSON.parse(subscriptionBody);
+
             for (var key in subscriptionBody.items) {
                 items.push({
-                    id: subscriptionBody.items[key].snippet.resourceId.channelId,
+                    channelId: subscriptionBody.items[key].snippet.resourceId.channelId,
                     title: subscriptionBody.items[key].snippet.title,
-                    website: "youtube",
-                    category: "",
+                    description: subscriptionBody.items[key].snippet.description,
+                    categories: [],
                     thumbnails: {
-                        "default": subscriptionBody.items[key].snippet.thumbnails.default,
-                        medium: subscriptionBody.items[key].snippet.thumbnails.medium,
-                        high: subscriptionBody.items[key].snippet.thumbnails.high
-                    },
-                    viewed: {}
+                        "default": subscriptionBody.items[key].snippet.thumbnails.default.url,
+                        medium: subscriptionBody.items[key].snippet.thumbnails.medium.url,
+                        high: subscriptionBody.items[key].snippet.thumbnails.high.url
+                    }
                 })
             }
 

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import {RouterModule} from "@angular/router";
-import {LoginComponent} from "./User/Login/login.component";
-import {UnauthorizedComponent} from "./Unauthorized/unauthorized.component";
+import {LoginComponent} from "./user/login/login.component";
+import {UnauthorizedComponent} from "./unauthorized/unauthorized.component";
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
-import {HomeComponent} from "./Home/home.component";
-import {SubscribeComponent} from "./User/Subscribe/subscribe.component";
-import {Oauth2callbackComponent} from "./Auth/oauth2callback/oauth2callback.component";
-import {AuthGuard} from "./Auth/auth.guard.service";
+import {HomeComponent} from "./home/home.component";
+import {SubscribeComponent} from "./user/subscribe/subscribe.component";
+import {Oauth2callbackComponent} from "./auth/oauth2callback/oauth2callback.component";
+import {AuthGuard} from "./auth/auth.guard.service";
 
 @NgModule({
   imports: [

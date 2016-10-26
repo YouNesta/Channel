@@ -1,0 +1,46 @@
+<button md-raised-button (click)="youtubeConnect()" >Connect to Youtube</button>
+
+
+<md-card class="demo-card demo-basic">
+  <md-toolbar color="primary">
+    <span>Pofile</span>
+    <span class="app-toolbar-filler"></span>
+    <md-slide-toggle [(ngModel)]="updateProfile">
+      Update
+    </md-slide-toggle>
+  </md-toolbar>
+  <md-card-content>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <md-input  [disabled]="!updateProfile" #pseudoInput type="text" [(ngModel)]="user.pseudo"  minlength="5" maxlength="20" placeholder="Pseudo" name="pseudo" id="pseudo">
+      </md-input>
+
+      <md-input #emailInput [disabled]="!updateProfile" type="text" [(ngModel)]="user.email"  minlength="5" maxlength="40" placeholder="Email" name="email" id="email">
+      </md-input>
+
+      <table>
+        <tr>
+          <td>
+            <md-input placeholder="First Name" [disabled]="!updateProfile" [(ngModel)]="user.firstName" minlength="5" maxlength="20" name="firstName" #firstNameInput>
+            </md-input>
+          </td>
+          <td>
+            <md-input placeholder="Last Name" [disabled]="!updateProfile" minlength="5" [(ngModel)]="user.lastName" maxlength="50"  name="lastName" #lastNameInput>
+            </md-input>
+          </td>
+        </tr>
+      </table>
+
+      <md-input #phoneInput type="text" [disabled]="!updateProfile" [(ngModel)]="user.phone"  minlength="5" maxlength="40" name="phone" id="phone">
+        <md-placeholder>
+          <i class="material-icons app-input-icon">android</i> Phone
+        </md-placeholder>
+      </md-input>
+      <md-card-actions *ngIf="updateProfile">
+        <button class="md-primary" type="submit" [disabled]="!loginForm.form.valid" md-fab>
+          <md-icon class="md-24">send</md-icon>
+        </button>
+      </md-card-actions>
+    </form>
+  </md-card-content>
+</md-card>
+

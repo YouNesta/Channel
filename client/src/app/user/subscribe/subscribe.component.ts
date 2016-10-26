@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MdInput} from "@angular/material";
-import {AuthService} from "../../Auth/auth.service";
+import {AuthService} from "../../auth/auth.service";
 import {Router} from "@angular/router";
 import {User} from "../user";
 

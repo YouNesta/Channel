@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
-import {AuthService} from "../../Auth/auth.service";
+import {AuthService} from "../../auth/auth.service";
 import {MdInput} from "@angular/material";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
   @ViewChild('emailInput') emailInput: MdInput;

@@ -1,4 +1,4 @@
-import {Channel} from "../Channel/channel";
+import {Channel} from "../channel/channel";
 export class User {
   id?: string;
   pseudo: string;

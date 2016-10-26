@@ -1,5 +1,9 @@
 <md-card class="demo-card demo-basic">
-  <md-toolbar color="primary">SubscriptionAuth</md-toolbar>
+  <md-toolbar color="primary">
+ <span>
+   SubscriptionAuth
+ </span>
+  </md-toolbar>
   <md-card-content>
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
 
@@ -46,13 +50,12 @@
           </td>
         </tr>
       </table>
-
-
-
-
-      <button class="md-primary" type="submit" [disabled]="!loginForm.form.valid" md-fab>
-        <md-icon class="md-24">send</md-icon>
-      </button>
+      <md-card-actions>
+        <button class="md-primary" type="submit" [disabled]="!loginForm.form.valid" md-fab>
+          <md-icon class="md-24">send</md-icon>
+        </button>
+      </md-card-actions>
     </form>
   </md-card-content>
+
 </md-card>

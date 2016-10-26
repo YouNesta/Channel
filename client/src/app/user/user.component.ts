@@ -9,16 +9,12 @@ import {User} from "./user";
 })
 export class UserComponent implements OnInit {
     user: User;
-    services = {
-      "youtube": false
-    };
+    updateProfile = false;
 
 
   constructor(private service: UserService) {
     var user = this.service.getUser();
     this.user = new User(user.pseudo, user.email, user.firstName, user.lastName, user.phone, user.channels, user._id, user.token)
-
-
   }
 
   ngOnInit() {

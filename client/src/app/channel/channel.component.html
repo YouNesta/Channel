@@ -1,0 +1,15 @@
+<md-toolbar>
+
+</md-toolbar>
+
+<md-card *ngFor="let channel of channels">
+  <md-card-header>
+    <img md-card-avatar [src]="channel.thumbnails.default">
+    <md-card-title>{{channel.title}}</md-card-title>
+    <md-card-subtitle><a href="http://youtube.com/channel/{{channel.id}}">Official Channel</a></md-card-subtitle>
+  </md-card-header>
+  <img md-card-image [src]="channel.thumbnails.medium">
+  <md-card-content>
+    <p>{{channel.description}}</p>
+  </md-card-content>
+</md-card>

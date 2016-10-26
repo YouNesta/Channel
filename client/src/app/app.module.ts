@@ -11,26 +11,30 @@ import { MaterialModule } from '@angular/material';
 import {AppRoutingModule} from "./app-routing.module";
 
 //Module
-import {UserModule} from "./User/user.module";
+import {UserModule} from "./user/user.module";
 
 //Component
 import { AppComponent } from './app.component';
-import { AuthGuard } from "./Auth/auth.guard.service";
+import { AuthGuard } from "./auth/auth.guard.service";
 
-import { AuthService } from "./Auth/auth.service";
-import { LoginComponent } from './User/Login/login.component';
-import { UnauthorizedComponent } from './Unauthorized/unauthorized.component';
+import { AuthService } from "./auth/auth.service";
+import { LoginComponent } from './user/login/login.component';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { HeaderComponent } from './Header/header.component';
-import { HomeComponent } from './Home/home.component';
-import { SubscribeComponent } from "./User/Subscribe/subscribe.component";
-import { SidenavComponent } from './Sidenav/sidenav.component';
-import { Oauth2callbackComponent } from './Auth/oauth2callback/oauth2callback.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { HomeComponent } from './home/home.component';
+import { SubscribeComponent } from "./user/subscribe/subscribe.component";
+import { SidenavComponent } from './layout/sidenav/sidenav.component';
+import { Oauth2callbackComponent } from './auth/oauth2callback/oauth2callback.component';
+import { ServicesComponent } from './channel/Services/services.component';
+import {ChannelModule} from "./channel/channel.module";
+import { FilterPipe } from './pipe/filter.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
+    FilterPipe,
     LoginComponent,
     UnauthorizedComponent,
     PageNotFoundComponent,
@@ -38,7 +42,8 @@ import { Oauth2callbackComponent } from './Auth/oauth2callback/oauth2callback.co
     HomeComponent,
     SubscribeComponent,
     SidenavComponent,
-    Oauth2callbackComponent
+    Oauth2callbackComponent,
+    ServicesComponent,
   ],
 
   imports: [
@@ -48,6 +53,7 @@ import { Oauth2callbackComponent } from './Auth/oauth2callback/oauth2callback.co
     MaterialModule.forRoot(),
     UserModule,
     RouterModule,
+    ChannelModule,
     AppRoutingModule
   ],
   providers: [

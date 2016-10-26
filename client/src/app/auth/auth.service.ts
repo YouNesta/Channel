@@ -5,7 +5,7 @@ import 'rxjs/add/operator/map'
 import 'rxjs/add/operator/catch'
 import { tokenNotExpired } from 'angular2-jwt';
 import {config} from "../../environments/environment";
-import {User} from "../User/user";
+import {User} from "../user/user";
 
 @Injectable()
 export class AuthService {

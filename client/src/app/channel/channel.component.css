@@ -1,0 +1,8 @@
+md-card{
+  width: 27%;
+  display: inline-block;
+}
+md-card-content{
+  height: 15vh;
+  overflow: scroll;
+}
