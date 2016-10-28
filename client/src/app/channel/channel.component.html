@@ -4,12 +4,19 @@
 
 <md-card *ngFor="let channel of channels">
   <md-card-header>
-    <img md-card-avatar [src]="channel.thumbnails.default">
+    <img md-card-avatar [src]="channel.thumbnail">
     <md-card-title>{{channel.title}}</md-card-title>
-    <md-card-subtitle><a href="http://youtube.com/channel/{{channel.id}}">Official Channel</a></md-card-subtitle>
+    <md-card-subtitle><a href="{{channel.url}}">Official Channel</a></md-card-subtitle>
   </md-card-header>
-  <img md-card-image [src]="channel.thumbnails.medium">
+  <img md-card-image [src]="channel.thumbnail">
   <md-card-content>
     <p>{{channel.description}}</p>
   </md-card-content>
+  <tag-input [(ngModel)]='channel.channelCategories'
+             [placeholder]="options.placeholder"
+             [secondaryPlaceholder]="options.secondaryPlaceholder"
+             [maxItems]="options.maxItems"
+             [separatorKeys]="options.separatorKeys">
+  </tag-input>
+
 </md-card>

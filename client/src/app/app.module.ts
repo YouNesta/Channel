@@ -43,7 +43,7 @@ import { FilterPipe } from './pipe/filter.pipe';
     SubscribeComponent,
     SidenavComponent,
     Oauth2callbackComponent,
-    ServicesComponent,
+    ServicesComponent
   ],
 
   imports: [
@@ -55,6 +55,7 @@ import { FilterPipe } from './pipe/filter.pipe';
     RouterModule,
     ChannelModule,
     AppRoutingModule
+
   ],
   providers: [
     provideAuth({

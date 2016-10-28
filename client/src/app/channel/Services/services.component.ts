@@ -12,23 +12,15 @@ export class ServicesComponent implements OnInit {
 
   trustedServices = {
     "youtube": false,
-    "hgfhgf": false,
-    "hgjfjhgfgjhf": false
+    "hgfhgf": false
   };
-  services= {};
-  constructor(private service: ChannelService) {
-    var services = this.service.getServices();
+  services= [];
 
-    for(var key in services){
-      console.log(services[key].serviceName);
-        this.services[services[key].serviceName] = services[key];
-      console.log(this.services);
-    }
+  constructor(private http: ChannelService) {
+    this.services = this.http.getServices();
   }
 
-  keys() : Array<string> {
-    return Object.keys(this.services);
-  }
+
     ngOnInit() {
   }
 

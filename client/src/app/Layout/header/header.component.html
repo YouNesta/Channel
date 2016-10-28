@@ -9,6 +9,8 @@
   <nav>
     <a *ngIf="!isLoggedIn()" routerLink="/login" routerLinkActive="active">Connexion</a>
     <a *ngIf="!isLoggedIn()" routerLink="/subscribe" routerLinkActive="active">Inscription</a>
-    <button *ngIf="isLoggedIn()" (click)="logout()">Déconnexion</button>
+    <button class="app-icon-button" *ngIf="isLoggedIn()" (click)="logout()">
+      <i class="material-icons app-toolbar-menu">power_settings_new</i>
+    </button>
   </nav>
 </md-toolbar>

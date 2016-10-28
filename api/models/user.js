@@ -40,11 +40,11 @@ var UserSchema = new Schema({
         profile: {},
         token: {}
     }],
-    channels:{
-      id: String,
-      categories: {},
-      service: String
-    },
+    channels:[{
+        id: Schema.Types.ObjectId,
+        categories: [String],
+        service: String
+    }],
     createdAt: {
         type: Date,
         default: Date.now

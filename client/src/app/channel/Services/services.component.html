@@ -1,10 +1,10 @@
-<md-card *ngFor="let key of keys()">
+<md-card *ngFor="let service of services">
   <md-card-header>
-    <img md-card-avatar [src]="services[key].profile.thumbnails.default">
-    <md-card-title>{{services[key].serviceName}}</md-card-title>
-    <md-card-subtitle>{{services[key].profile.title}}</md-card-subtitle>
+    <img md-card-avatar [src]="service.profile.thumbnails.default.url">
+    <md-card-title>{{service.serviceName}}</md-card-title>
+    <md-card-subtitle>{{service.profile.title}}</md-card-subtitle>
   </md-card-header>
   <md-card-content>
-    <p>{{services[key].profile.description}}</p>
+    <p>{{service.profile.description}}</p>
   </md-card-content>
 </md-card>

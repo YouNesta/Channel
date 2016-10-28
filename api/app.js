@@ -7,7 +7,7 @@ var mongoose = require('mongoose')
 
 var routes = require('./routes/index');
 var user = require('./routes/user');
-var channel = require('./routes/channel');
+var channel = require('./routes/channel/channel');
 var config = require('./config/config');
 
 var app = express();

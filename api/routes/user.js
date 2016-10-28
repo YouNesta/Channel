@@ -108,6 +108,7 @@ router.post('/login', function(req, res, next) {
 
 });
 
+
 router.post('/oauth', jwtAuth({ secret: config.secret}), function(req, res) {
 
     if (!req.body.code|| !req.body._id) {
@@ -145,19 +146,33 @@ router.post('/oauth', jwtAuth({ secret: config.secret}), function(req, res) {
                     }
                 };
                 request.get(options, function(error, response, youtubeBody) {
+                     youtubeBody = JSON.parse(youtubeBody);
+
                     getSubscription(body.access_token, function(subscription){
-
-
                         channelModule.saveYoutubeChannels(subscription, function(data){
+                            console.log( {
+                                id: youtubeBody.items[0].id,
+                                title: youtubeBody.items[0].snippet.title,
+                                description: youtubeBody.items[0].snippet.description,
+                                thumbnails: youtubeBody.items[0].snippet.thumbnails
+                            })
                             User.findByIdAndUpdate(
                                 req.body._id,
                                 {$set: {
-                                    token: {
-                                        service: 'youtube',
-                                        token: body.access_token,
-                                        refreshToken: body.refresh_token,
-                                        token_type : body.token_type,
-                                        expires_in : body.expires_in
+                                    services: {
+                                        serviceName: 'youtube',
+                                        profile: {
+                                            id: youtubeBody.items[0].id,
+                                            title: youtubeBody.items[0].snippet.title,
+                                            description: youtubeBody.items[0].snippet.description,
+                                            thumbnails: youtubeBody.items[0].snippet.thumbnails
+                                        },
+                                        token: {
+                                            token: body.access_token,
+                                            refreshToken: body.refresh_token,
+                                            token_type : body.token_type,
+                                            expires_in : body.expires_in
+                                        },
                                     },
                                     channels: data
                                 }},
@@ -196,7 +211,6 @@ function getSubscription(access_token, callback){
         var items = [];
 
         for(var key in subscriptionBody.items){
-            console.log(subscriptionBody.items[key].snippet.resourceId.channelId);
             items.push({
                 channelId: subscriptionBody.items[key].snippet.resourceId.channelId,
                 title: subscriptionBody.items[key].snippet.title,
