@@ -3,7 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
-var channelModule = require('../../modules/channel');
+var channelModule = require('../../modules/channel/channel');
 var config = require('../../config/config')
 var jwt = require('jsonwebtoken');
 var jwtAuth = require('express-jwt');
@@ -13,10 +13,7 @@ var update = require('./update')
 
 
 router.use(jwtAuth({ secret: config.secret}));
-
 router.use('/update', update);
-
-
 
 router.get('/', function(req, res, next) {
     var token =  req.get('Authorization').replace("Bearer ", "");
@@ -54,9 +51,7 @@ router.get('/', function(req, res, next) {
                     msg: 'Success Channels find',
                     data: channels
                 })
-
             });
-
         }
     });
 });

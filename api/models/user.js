@@ -41,7 +41,7 @@ var UserSchema = new Schema({
         token: {}
     }],
     channels:[{
-        id: Schema.Types.ObjectId,
+        id: String,
         categories: [String],
         service: String
     }],

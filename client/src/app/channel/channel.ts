@@ -18,7 +18,6 @@ export class Channel {
     this.title = channel.title;
     this.url = channel.url;
     this.categories = channel.categories
-    console.log(this.categories);
   }
 
 

@@ -5,8 +5,8 @@ var User = require('../models/user');
 var config = require('../config/config');
 var request = require('request');
 var jwtAuth = require('express-jwt');
-var channelModule = require('../modules/channel');
-
+var channelModule = require('../modules/channel/channel');
+var color = require('colors')
 
 router.post('/subscribe', function(req, res, next) {
 
@@ -71,8 +71,10 @@ router.post('/login', function(req, res, next) {
             msg: 'Please pass email and password.'
         });
     }else{
+        var param = req.body.email;
+
         User.findOne({
-            email: req.body.email
+            $or:[ {email:{ $regex : new RegExp(param, "i") }}, {'phone':param} ]
         }, function(err, user) {
             if (err) throw err;
 
@@ -150,41 +152,47 @@ router.post('/oauth', jwtAuth({ secret: config.secret}), function(req, res) {
 
                     getSubscription(body.access_token, function(subscription){
                         channelModule.saveYoutubeChannels(subscription, function(data){
-                            console.log( {
-                                id: youtubeBody.items[0].id,
-                                title: youtubeBody.items[0].snippet.title,
-                                description: youtubeBody.items[0].snippet.description,
-                                thumbnails: youtubeBody.items[0].snippet.thumbnails
-                            })
-                            User.findByIdAndUpdate(
-                                req.body._id,
-                                {$set: {
-                                    services: {
-                                        serviceName: 'youtube',
-                                        profile: {
-                                            id: youtubeBody.items[0].id,
-                                            title: youtubeBody.items[0].snippet.title,
-                                            description: youtubeBody.items[0].snippet.description,
-                                            thumbnails: youtubeBody.items[0].snippet.thumbnails
-                                        },
-                                        token: {
-                                            token: body.access_token,
-                                            refreshToken: body.refresh_token,
-                                            token_type : body.token_type,
-                                            expires_in : body.expires_in
-                                        },
-                                    },
-                                    channels: data
-                                }},
-                                {safe: true, upsert: true, new: true},
-                                function(err, user) {
-                                    if(err) throw err;
+                            User.findOne({
+                            _id : req.body._id,
 
+                            }, function(err, user) {
+                                    if(err) throw err;
+                                var channels = user.channels.toObject();
+                                for(var n in data){
+                                    for(var i in channels){
+                                        if(channels[i].id && data[n].id == channels[i].id){
+                                            data[n] = channels[i]
+                                        }
+                                    }
+                                }
+                                user.channels = data;
+
+                         
+                                user.services.push({
+                                    serviceName: 'youtube',
+                                    profile: {
+                                        id: youtubeBody.items[0].id,
+                                        title: youtubeBody.items[0].snippet.title,
+                                        description: youtubeBody.items[0].snippet.description,
+                                        thumbnails: youtubeBody.items[0].snippet.thumbnails
+                                    },
+                                    token: {
+                                        token: body.access_token,
+                                        refreshToken: body.refresh_token,
+                                        token_type: body.token_type,
+                                        expires_in: body.expires_in
+                                    }
+                                });
+
+                                user.save(function (err) {
                                     res.json({
                                         success: true,
                                         msg: "Successful authenfication",
                                         user: user
                                     });
+
+
+                                })
 
                                 }
                             );
@@ -209,8 +217,9 @@ function getSubscription(access_token, callback){
     request.get(options, function(error, response, subscriptionBody) {
         var subscriptionBody = JSON.parse(subscriptionBody);
         var items = [];
-
         for(var key in subscriptionBody.items){
+
+            console.log(color.cyan(subscriptionBody.items[key]))
             items.push({
                 channelId: subscriptionBody.items[key].snippet.resourceId.channelId,
                 title: subscriptionBody.items[key].snippet.title,
